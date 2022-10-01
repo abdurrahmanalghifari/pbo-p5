@@ -4,5 +4,5 @@ repo ini merupakan tugas pemrograman java
 buatlah method untuk:
 1. nama harus  Americano, latte, arabika [done]
 2. qty minimal 1 [done]
-3. buatlah method untuk melakukan pembayaran dimana nilai pembayaran >= totalnya
-4. setelah selesai pembayaran tampilkan kembalian (jika ada) dan kosongkan arraylist dengan "p.clear()"
+3. buatlah method untuk melakukan pembayaran dimana nilai pembayaran >= totalnya [done]
+4. setelah selesai pembayaran tampilkan kembalian (jika ada) dan kosongkan arraylist dengan "p.clear()" [done]

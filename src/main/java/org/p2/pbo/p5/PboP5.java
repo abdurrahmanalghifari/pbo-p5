@@ -3,6 +3,7 @@ package org.p2.pbo.p5;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import static java.lang.Math.abs;
 
 public class PboP5 {
 
@@ -52,11 +53,11 @@ public class PboP5 {
             
         }while(ok == false);
             
-        System.out.print("Tipe: ");
-        tipe = sc.nextLine();
+        // System.out.print("Tipe: ");
+        // tipe = sc.nextLine();
 
-        System.out.print("Gula: ");
-        gula = sc.nextLine();
+        // System.out.print("Gula: ");
+        // gula = sc.nextLine();
                 
         System.out.print("Harga: ");
         harga = sc.nextInt();
@@ -67,7 +68,7 @@ public class PboP5 {
             ok = cekQty( qty ); //qty method
         }while(ok == false);
 
-        p.add( new Pesan( nama, tipe, gula, harga, qty ) );
+        p.add( new Pesan( nama, harga, qty ) );
 
         return p;
 
@@ -94,11 +95,13 @@ public class PboP5 {
         return ok;
     }
 
-    private static boolean cekBayar(int total, int bayar) {
+    private static boolean cekBayar(int jumlah, int bayar) {
         boolean ok = false; 
         
-        if ( bayar >= total ){
+        if ( bayar >= jumlah ){
             ok = true;
+        } else {
+            System.out.println("Maap duitnya kurang");
         }
         
         return ok;
@@ -107,17 +110,16 @@ public class PboP5 {
     private static ArrayList<Pesan> bayar( ArrayList<Pesan> p ){
         Scanner sc = new Scanner(System.in);
         String nama, tipe, gula;
-        Integer harga, qty, total, jumlah;         
+        Integer harga, qty, jumlah, bayar; 
+        Boolean ok;        
         
-        total=0;
+        jumlah=0;
         //tampilkan data 
         System.out.println("Jumlah data: "+ p.size()); 
         System.out.println("--------------------------------------------------------------------");
-        System.out.printf("| %-3s | %-10s | %-10s | %-5s | %-7s | %-3s  | %-7s |", 
+        System.out.printf("| %-3s | %-10s | %-7s | %-3s  | %-7s |", 
                 "No",
                 "Nama",
-                "Tipe",
-                "Gula",
                 "Harga",
                 "Qty",
                 "Jumlah");
@@ -125,22 +127,37 @@ public class PboP5 {
         System.out.println("--------------------------------------------------------------------");
         
         for(int i = 0; i < p.size(); i++ ){
-            System.out.printf("| %-3s | %-10s | %-10s | %-5s | %-7s | %-3s  | %-7s |", 
+
+            jumlah =  p.get( i ).getQty() * p.get(i).getHarga();
+
+            System.out.printf("| %-3s | %-10s | %-7s | %-3s  | %-7s |", 
                 i + 1,
                 p.get(i).getNama(),
-                p.get(i).getTipe(),
-                p.get(i).getGula(),
                 p.get(i).getHarga(),
                 p.get(i).getQty(),
                 (p.get(i).getHarga() * p.get(i).getQty()));
             System.out.println();
             System.out.println("--------------------------------------------------------------------");
-        
-        }
-        
+            System.out.println("Total Bayar: "+ jumlah);
+
+            }
+
+            do{
+                System.out.print("Bayar: ");
+                bayar = sc.nextInt();
+                ok = cekBayar( jumlah, bayar );
+            }while(ok == false);
+    
+            p.clear();
+    
+            System.out.println("Kembalian: "+ abs(jumlah - bayar) );
+            System.out.println("Orderan selesai, Terimakasih!!!");
+            sc.nextLine();
+            
+
         System.out.println("Tekan enter untuk lanjut...");
         sc.nextLine();
-        
+    
         return p;
     }
 }
