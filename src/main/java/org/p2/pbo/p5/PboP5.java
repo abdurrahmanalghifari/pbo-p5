@@ -74,12 +74,12 @@ public class PboP5 {
 
     }
     
-    public static boolean cekNama (String n){
+    private static boolean cekNama (String n){
         boolean ok = false;
         if (n.equalsIgnoreCase("Americano")||n.equalsIgnoreCase("Latte")||n.equalsIgnoreCase("Arabica")){
             ok=true;
         } else {
-            System.out.println("Hanya Tersedia : Americano, Latte, Arabika");
+            System.out.println("Hanya Tersedia : Americano, Latte, Arabica");
         }
         return ok;
     }
@@ -95,10 +95,10 @@ public class PboP5 {
         return ok;
     }
 
-    private static boolean cekBayar(int jumlah, int bayar) {
+    private static boolean cekBayar(int total, int bayar) {
         boolean ok = false; 
         
-        if ( bayar >= jumlah ){
+        if ( bayar >= total ){
             ok = true;
         } else {
             System.out.println("Maap duitnya kurang");
@@ -110,13 +110,13 @@ public class PboP5 {
     private static ArrayList<Pesan> bayar( ArrayList<Pesan> p ){
         Scanner sc = new Scanner(System.in);
         String nama, tipe, gula;
-        Integer harga, qty, jumlah, bayar; 
+        Integer harga, qty, total, jumlah, bayar; 
         Boolean ok;        
-        
+        total = 0;
         jumlah=0;
         //tampilkan data 
         System.out.println("Jumlah data: "+ p.size()); 
-        System.out.println("--------------------------------------------------------------------");
+        System.out.println("-----------------------------------------------");
         System.out.printf("| %-3s | %-10s | %-7s | %-3s  | %-7s |", 
                 "No",
                 "Nama",
@@ -124,28 +124,29 @@ public class PboP5 {
                 "Qty",
                 "Jumlah");
         System.out.println();
-        System.out.println("--------------------------------------------------------------------");
-        
+        System.out.println("-----------------------------------------------");
+        int n = 1;
         for(int i = 0; i < p.size(); i++ ){
 
             jumlah =  p.get( i ).getQty() * p.get(i).getHarga();
 
             System.out.printf("| %-3s | %-10s | %-7s | %-3s  | %-7s |", 
-                i + 1,
+                n++,
                 p.get(i).getNama(),
                 p.get(i).getHarga(),
                 p.get(i).getQty(),
                 (p.get(i).getHarga() * p.get(i).getQty()));
+            
+            total += jumlah;
             System.out.println();
-            System.out.println("--------------------------------------------------------------------");
-            System.out.println("Total Bayar: "+ jumlah);
-
             }
+            System.out.println("-----------------------------------------------");
+            System.out.println("Total Bayar: "+ total);
 
             do{
                 System.out.print("Bayar: ");
                 bayar = sc.nextInt();
-                ok = cekBayar( jumlah, bayar );
+                ok = cekBayar( total, bayar );
             }while(ok == false);
     
             p.clear();
