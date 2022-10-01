@@ -44,15 +44,16 @@ public class PboP5 {
         String nama, tipe, gula;
         Integer harga, qty;
         Boolean ok;
-        
-        System.out.print("Nama: ");
-        nama = sc.nextLine();
-            
+
         do{
-            System.out.print( "Tipe Tersedia [Americano, Cappucino, Latte]: " );
-            tipe = sc.nextLine();
-            ok = cekkopi( tipe );
+            System.out.print( "Nama : " );
+            nama = sc.nextLine();
+            ok = cekNama( nama );
+            
         }while(ok == false);
+            
+        System.out.print("Tipe: ");
+        tipe = sc.nextLine();
 
         System.out.print("Gula: ");
         gula = sc.nextLine();
@@ -61,9 +62,9 @@ public class PboP5 {
         harga = sc.nextInt();
                 
         do{
-            System.out.print( "Qty [min order 1]: " );
+            System.out.print( "Qty: " );
             qty = sc.nextInt();
-            ok = cekQty( qty );
+            ok = cekQty( qty ); //qty method
         }while(ok == false);
 
         p.add( new Pesan( nama, tipe, gula, harga, qty ) );
@@ -72,10 +73,12 @@ public class PboP5 {
 
     }
     
-    public static boolean cekkopi (String n){
+    public static boolean cekNama (String n){
         boolean ok = false;
-        if (n.equalsIgnoreCase("Americano")||n.equalsIgnoreCase("Cappucino")||n.equalsIgnoreCase("Latte")){
+        if (n.equalsIgnoreCase("Americano")||n.equalsIgnoreCase("Latte")||n.equalsIgnoreCase("Arabica")){
             ok=true;
+        } else {
+            System.out.println("Hanya Tersedia : Americano, Latte, Arabika");
         }
         return ok;
     }
@@ -85,6 +88,17 @@ public class PboP5 {
         int minQty = 1;
         if ( QtyTotal >= minQty ){
             ok = true;
+        } else {
+            System.out.println("Minimal Order QTY : 1");
+        }
+        return ok;
+    }
+
+    private static boolean cekBayar(int total, int bayar) {
+        boolean ok = false; 
+        
+        if ( bayar >= total ){
+            ok = true;
         }
         
         return ok;
@@ -93,10 +107,11 @@ public class PboP5 {
     private static ArrayList<Pesan> bayar( ArrayList<Pesan> p ){
         Scanner sc = new Scanner(System.in);
         String nama, tipe, gula;
-        Integer harga, qty;         
+        Integer harga, qty, total, jumlah;         
         
+        total=0;
         //tampilkan data 
-        System.out.println("Jumlah data: "+ p.size()); //ini error
+        System.out.println("Jumlah data: "+ p.size()); 
         System.out.println("--------------------------------------------------------------------");
         System.out.printf("| %-3s | %-10s | %-10s | %-5s | %-7s | %-3s  | %-7s |", 
                 "No",
