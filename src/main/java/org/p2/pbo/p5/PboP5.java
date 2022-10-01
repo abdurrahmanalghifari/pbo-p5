@@ -1,7 +1,10 @@
+package org.p2.pbo.p5;
+
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class tugasp5 {
+public class PboP5 {
 
     public static void main(String[] args) {
         ArrayList<Pesan> p = new ArrayList();
@@ -57,8 +60,11 @@ public class tugasp5 {
         System.out.print("Harga: ");
         harga = sc.nextInt();
                 
-        System.out.print("Qty: ");
-        qty = sc.nextInt();
+        do{
+            System.out.print( "Qty [min order 1]: " );
+            qty = sc.nextInt();
+            ok = cekQty( qty );
+        }while(ok == false);
 
         p.add( new Pesan( nama, tipe, gula, harga, qty ) );
 
@@ -74,6 +80,16 @@ public class tugasp5 {
         return ok;
     }
 
+    private static boolean cekQty (int QtyTotal) {
+        boolean ok = false; 
+        int minQty = 1;
+        if ( QtyTotal >= minQty ){
+            ok = true;
+        }
+        
+        return ok;
+    }
+    
     private static ArrayList<Pesan> bayar( ArrayList<Pesan> p ){
         Scanner sc = new Scanner(System.in);
         String nama, tipe, gula;

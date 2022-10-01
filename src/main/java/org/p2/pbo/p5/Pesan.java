@@ -1,3 +1,5 @@
+package org.p2.pbo.p5;
+
 public class Pesan {
     String nama, tipe, gula;
     Integer harga, qty;
